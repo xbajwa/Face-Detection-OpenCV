@@ -1,20 +1,16 @@
-# importing OpenCV(cv2) module
-import os
+import pathlib
 from typing import List
 
 import cv2
-import face_recognition
+import os
 from PIL import Image
 
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_alt.xml')
 
-# img = cv2.imread('C:/Users/DELL/Desktop/week 1-5/Visual Data/Project/Data set/V&J/__MACOSX/lfw-deepfunneledAaron_Eckhart/._Aaron_Eckhart_0001.jpg')
-# Output img with window name as 'image'
-# cv2.imshow('image', img)
-# Maintain output window utill
-# user presses a key
-# cv2.waitKey(0)
-# Destroying present windows on screen
-# cv2.destroyAllWindows()
+class VideoClass:
+    def __init__(self, name, vid):
+        self.name = name
+        self.video = vid
 
 
 class ImageClass:
@@ -23,11 +19,6 @@ class ImageClass:
         self.im = img
         self.width = width
         self.height = height
-        self.scaleFactor = 1.3
-        self.minNeighbors = 4
-        self.minSize = 30
-        self.maxSize = 30
-        self.flags = cv2.CASCADE_SCALE_IMAGE
 
     def imshow(self):
         cv2.imshow(self.name, self.im)
@@ -47,8 +38,12 @@ for entry in entries:
         if img is not None:
             width, height = im.size
             obj = ImageClass(filename, img, width, height)
-            obj.imshow(obj)
             images.append(obj)
+            print("Loading...")
 
 
-print(len(images))
+for i in range(len(images)):
+    faces = face_cascade.detectMultiScale(cv2.cvtColor(images[i].im, cv2.COLOR_BGR2GRAY))
+    for (column, row, width, height) in faces:
+        cv2.rectangle( images[i].im, (column, row), (column + width, row + height), (0, 255, 0), 2)
+        ImageClass.imshow(images[0])
