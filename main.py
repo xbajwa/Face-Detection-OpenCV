@@ -46,4 +46,4 @@ for i in range(len(images)):
     faces = face_cascade.detectMultiScale(cv2.cvtColor(images[i].im, cv2.COLOR_BGR2GRAY))
     for (column, row, width, height) in faces:
         cv2.rectangle( images[i].im, (column, row), (column + width, row + height), (0, 255, 0), 2)
-        ImageClass.imshow(images[0])
+        ImageClass.imshow(images[i])
