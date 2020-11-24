@@ -1,10 +1,12 @@
-# importing OpenCV(cv2) module
+
 import pathlib
 from typing import List
 
 import cv2
 import os
 from PIL import Image
+
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_alt.xml')
 
 
 def load_images_from_folder(folder):
@@ -15,17 +17,6 @@ def load_images_from_folder(folder):
             print(filename)
             images.append(Image(filename, img))
     return images
-
-
-# img = cv2.imread('C:/Users/DELL/Desktop/week 1-5/Visual Data/Project/Data set/V&J/__MACOSX/lfw-deepfunneledAaron_Eckhart/._Aaron_Eckhart_0001.jpg')
-# Output img with window name as 'image'
-# cv2.imshow('image', img)
-# Maintain output window utill
-# user presses a key
-# cv2.waitKey(0)
-# Destroying present windows on screen
-# cv2.destroyAllWindows()
-
 
 class ImageClass:
     def __init__(self, name, img, width, height):
@@ -46,20 +37,16 @@ class ImageClass:
 
     @property
     def rec(self):
-        faces = cv2.CascadeClassifier.detectMultiScale(self.im,self.scaleFactor, self.minNeighbors, self.flags,self.minSize,self.maxSize)
-        if len(faces) == 0:
-            return []
-        faces[:, 2:] += faces[:, :2]
-        return faces
-
-    def draw_rects(self, faces, color):
+        bw = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        faces = cv2.CascadeClassifier.detectMultiScale(bw)
         for x1, y1, x2, y2 in faces:
-            cv2.rectangle(self.im, (x1, y1), (x2, y2), 2, color)
+            cv2.rectangle(self.im, (x1, y1), (x2, y2), 2)
+
 
 images: List[ImageClass] = []
 
-folder = 'C:/Users/DELL/Desktop/week 1-5/Visual Data/Project/Data set/V&J/lfw-deepfunneled/'
-entries = os.listdir('C:/Users/DELL/Desktop/week 1-5/Visual Data/Project/Data set/V&J/lfw-deepfunneled/')
+folder = 'C:/Users/opera_user/Downloads/archive/lfw-deepfunneled/lfw-deepfunneled/'
+entries = os.listdir('C:/Users/opera_user/Downloads/archive/lfw-deepfunneled/lfw-deepfunneled/')
 for entry in entries:
     name = str(folder) + str(entry)
     for filename in os.listdir(name):
@@ -69,12 +56,14 @@ for entry in entries:
             width, height = im.size
             obj = ImageClass(filename, img, width, height)
             images.append(obj)
-            obj.imshow()
-            rec = obj.rec()
-            obj.scaleFactor(rec)
+            print("Loading...")
 
 
-print(len(images))
-print(images[0].name)
-imk=images[0].im
-cv2.imshow(imk)
+for i in range(len(images)):
+    faces = face_cascade.detectMultiScale(cv2.cvtColor(images[i].im, cv2.COLOR_BGR2GRAY))
+    for (column, row, width, height) in faces:
+        cv2.rectangle( images[i].im, (column, row), (column + width, row + height), (0, 255, 0), 2)
+
+    cv2.imshow('',images[i].im)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
