@@ -64,6 +64,6 @@ for i in range(len(images)):
     for (column, row, width, height) in faces:
         cv2.rectangle( images[i].im, (column, row), (column + width, row + height), (0, 255, 0), 2)
 
-    cv2.imshow('',images[i].im)
+    cv2.imshow(images[i].name,images[i].im)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
