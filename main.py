@@ -28,6 +28,9 @@ class ImageClass:
 
 images: List[ImageClass] = []
 
+#folder = 'C:/Users/opera_user/Downloads/archive/lfw-deepfunneled/lfw-deepfunneled/'
+#entries = os.listdir('C:/Users/opera_user/Downloads/archive/lfw-deepfunneled/lfw-deepfunneled/')
+
 folder = 'C:/Users/DELL/Desktop/week 1-5/Visual Data/Project/Data set/V&J/lfw-deepfunneled/'
 entries = os.listdir('C:/Users/DELL/Desktop/week 1-5/Visual Data/Project/Data set/V&J/lfw-deepfunneled/')
 for entry in entries:
