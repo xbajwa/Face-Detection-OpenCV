@@ -2,7 +2,7 @@ import os
 import numpy as np
 import pandas as pd
 
-db = pd.DataFrame(columns=['pic', 'num', 'x','y','w','h'],index = range(0,303))
+db = pd.DataFrame(columns=['pic', 'num', 'x','y','w','h'],index = range(0,303)) # 303 is the total number of images
 entries = os.listdir('C:/Users/opera_user/PycharmProjects/FaceDet/test')
 for j in range(0, 303):
     print(j)
