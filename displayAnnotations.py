@@ -46,6 +46,7 @@ videos: List[VideoClass] = []
 
 folder = 'C:/Users/opera_user/Downloads/rand/VIRAT Ground Dataset/videos_original/'
 entries = os.listdir('C:/Users/opera_user/Downloads/rand/VIRAT Ground Dataset/videos_original/')
+entries = sorted(entries, key=len)
 for filename in entries:
     vid = cv2.VideoCapture(str(folder) + str(filename))
     if vid is not None:
